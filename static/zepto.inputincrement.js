@@ -24,17 +24,11 @@
                 max = (el.data('max') !== null) ? +el.data('max') : s.max,
                 step = (el.data('step') !== null) ? +el.data('step') : s.step;
             
-            var handleControls = function(event, e) {
+            var handleControls = function(e) {
                 var el = $(this);
                 
-                if (event) {// No onpress, real click
-                    event.stopPropagation();
-                    event.preventDefault();
-                }
-                else {// have onpress, this is passed real event
-                    e.stopPropagation();
-                    e.preventDefault();
-                }
+                e.stopPropagation();
+                e.preventDefault();
 
                 if (el.hasClass('locked')) {
                     return;
@@ -73,8 +67,8 @@
 
             if (typeof $.fn.onpress === 'function') {
                 //onpress plugin available
-                controlNeg.on('press', handleControls);
-                controlPos.on('press', handleControls);
+                controlNeg.onpress(handleControls);
+                controlPos.onpress(handleControls);
             }
             else {
                 controlNeg.on('click', handleControls);
